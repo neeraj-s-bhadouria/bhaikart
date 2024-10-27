@@ -4,6 +4,7 @@
     <div class="container">
         <div class="col-lg-6 mx-auto mt-2">
             <h1>New Here? Register Mate.</h1>
+            <h2 class="text-danger">{{ error_msg }}</h2>
             <br/>
             <form action="" method="post">
                 {% csrf_token %}
