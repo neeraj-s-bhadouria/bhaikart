@@ -10,27 +10,27 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <b><label for="fname">First Name</label></b>
-                    <input type="text" class="form-control" id="fname" name="fname" aria-describedby="fnameHelp" placeholder="Enter First Name">
+                    <input type="text" class="form-control" id="fname" name="fname" value="{{values.fname}}" aria-describedby="fnameHelp" placeholder="Enter First Name">
                 </div>
                 <div class="form-group">
                     <b><label for="lname">Last Name</label></b>
-                    <input type="text" class="form-control" id="lname" name="lname" aria-describedby="lnameHelp" placeholder="Enter Last Name">
+                    <input type="text" class="form-control" id="lname" name="lname" value="{{values.lname}}" aria-describedby="lnameHelp" placeholder="Enter Last Name">
                 </div>
                 <div class="form-group">
                     <b><label for="email">Email address</label></b>
-                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input type="email" class="form-control" id="email" name="email" value="{{values.email}}" aria-describedby="emailHelp" placeholder="Enter email">
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div class="form-group">
                     <b><label for="phoneNo">Contact No</label></b>
-                    <input type="tel" class="form-control" id="phoneNo" name="phoneNo" aria-describedby="phoneNoHelp" placeholder="Enter Contact Number" maxlength="14">
+                    <input type="tel" class="form-control" id="phoneNo" name="phoneNo" value="{{values.phoneNo}}" aria-describedby="phoneNoHelp" placeholder="Enter Contact Number" maxlength="14">
                 </div>
                 <div class="form-group">
                     <b><label for="password">Password</label></b>
                     <input type="password" class="form-control" id="password" name="pwd" placeholder="Password">
                 </div>
                 <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="checkbox">
+                    <input type="checkbox" class="form-check-input" id="checkbox" name="checkbox">
                     <b><label class="form-check-label" for="checkbox">I accept terms and condition</label></b>
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>

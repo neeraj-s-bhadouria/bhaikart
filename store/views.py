@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models.product import Product
 from .models.category import Category
 from .models.user import User
+from django.contrib.auth.hashers import make_password, check_password
 
 
 # index page where we will show all the products
@@ -34,13 +35,24 @@ def register(request):
             error_msg = 'Invalid phone number. It should be max of 14 digits long with country code.'
         elif(len(pwd) < 4 or len(pwd) > 25):
             error_msg = 'Password should be between 4 and 25 characters long.'
+        elif(not request.POST.get('checkbox')):
+            error_msg = 'Please agree to the terms and conditions.'
         else:
             user = User(first_name=fname, last_name=lname,
-                        email=email, contact_no=phoneNo,
-                        password=pwd)
+                        email=email, contact_no='+'+phoneNo,
+                        password=make_password(pwd))
             user.save()
             print('Registration Successful')
-            return render(request, 'index.html', {'msg' : 'Registration Successful'})
+            return redirect('homepage')
 
-        return render(request, 'signup.html', {'error_msg' : error_msg})
+        data = {
+            'error_msg': error_msg,
+            'values': {
+                'fname': fname,
+                'lname': lname,
+                'email': email,
+                'phoneNo': phoneNo,
+            }
+        }
+        return render(request, 'signup.html', data)
 
