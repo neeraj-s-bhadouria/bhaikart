@@ -1,0 +1,53 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+{% load cart %}
+    <div class="container">
+        {% if products%}
+            <div class="border rounded p-4 m-4">
+                <h1>Your Cart</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">S.No.</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products%}
+                            <tr>
+                                <td scope="row">{{ forloop.counter }}</td>
+                                <td scope="row"><img class="card-img-top" src="{{product.image.url}}" alt="Card image" style="height:60px"></td>
+                                <td scope="row">{{ product.name }}</td>
+                                <td scope="row">{{ product.price }}</td>
+                                {% with data=product.id|is_in_cart:request %}
+                                    {% if data.in_cart %}
+                                        <td scope="row">{{ data.quantity }}</td>
+                                        <td scope="row">{{ product.price|total_price_for_product:data.quantity}}</td>
+                                    {% endif %}
+                                {% endwith %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <th colspan="4"></th>
+                        <th colspan="">Total</th>
+                        <th>{{ total_price }}</th>
+                    </tfoot>
+                </table>
+                <hr/>
+                <div class="p-3 m-3">
+                    <a href="#" class="btn btn-light border rounded col-lg-3 float-right btn-outline-primary">Check out</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-lg-6 mx-auto mt-4">
+                <h1 class="text-danger">Your cart is empty.</h1>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

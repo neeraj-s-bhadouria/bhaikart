@@ -18,3 +18,7 @@ def is_in_cart(product_id, request):
         'quantity': 0
     }
     return data
+
+@register.filter(name='total_price_for_product')
+def total_price_for_product(product_price, product_quantity):
+    return product_price * product_quantity

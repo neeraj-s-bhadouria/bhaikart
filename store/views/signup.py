@@ -26,6 +26,7 @@ class Signup(View):
                         password=make_password(pwd))
             user.save()
             print('Registration Successful')
+            request.session['user'] = user.email
             return redirect('homepage')
         else:
             data = {
