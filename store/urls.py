@@ -2,7 +2,7 @@ from django.urls import path
 from .views.home import Index
 from .views.signup import Signup
 from .views.login import Login
-from .views.profile import logout, show_cart
+from .views.profile import logout, show_cart, check_out
 
 urlpatterns = [
     path('', Index.as_view(), name='homepage'),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('login', Login.as_view(), name='login'),
     path('logout', logout),
     path('cart', show_cart),
+    path('checkout', check_out),
 ]

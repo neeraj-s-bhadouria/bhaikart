@@ -23,3 +23,8 @@ def show_cart(request):
         data['total_price'] = total_price
         data['products'] = products
     return render(request, 'cart.html', data)
+
+# method to proceed with the checkout
+def check_out(request):
+    print(request.POST)
+    return redirect('homepage')
