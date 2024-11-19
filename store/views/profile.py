@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from ..models.product import Product
+from ..models.order import Order
+from ..models.user import User
 
 def logout(request):
     user_email = request.session.get('user')
@@ -27,4 +29,16 @@ def show_cart(request):
 # method to proceed with the checkout
 def check_out(request):
     print(request.POST)
+    customer = User.get_user_by_id(request.session.get('userId'))
+    print('customer - ', customer)
+    address = request.POST.get('address')
+    phone = request.POST.get('phone')
+    print('address:', address, 'phone:', phone, 'customer:', customer)
+    cart = request.session.get('cart')
+    products = Product.get_products_by_id(list(cart.keys()))
+    print('products = ', products, ', cart = ', cart)
+    for product in products:
+        order = Order(product = product, customer = customer, address = address, contact_no = phone, quantity = cart.get(str(product.id)), price = product.price)
+        order.save()
+    request.session['cart'] = []
     return redirect('homepage')

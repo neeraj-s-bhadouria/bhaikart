@@ -13,3 +13,7 @@ class User(models.Model):
     def __str__(self):
         return self.first_name + " " + self.last_name
 
+    @staticmethod
+    def get_user_by_id(id):
+        return User.objects.filter(id=id).first()
+

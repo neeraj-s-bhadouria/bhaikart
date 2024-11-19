@@ -8,7 +8,7 @@ class Index(View):
     # index page where we will show all the products
     def get(self, request):
         print('cart - ', request.session.get('cart'))
-        print('user - ', request.session.get('user'))
+        print('user - ', request.session.get('userEmail'))
         category_id = request.GET.get('category')
         products = Product.get_products_by_category_id(category_id) if category_id else Product.get_all_products()
         categories = Category.get_all_categories()

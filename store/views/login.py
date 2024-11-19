@@ -14,7 +14,8 @@ class Login(View):
         user = User.objects.filter(email=email).first()
         if user and check_password(pwd, user.password):
             print('Login Successful - ', email)
-            request.session['user'] = user.email
+            request.session['userEmail'] = user.email
+            request.session['userId'] = user.id
             return redirect('homepage')
         else:
             data = {'error_msg': 'Invalid email or password.'}
