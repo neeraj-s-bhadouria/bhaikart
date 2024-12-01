@@ -11,9 +11,14 @@ class Order(models.Model):
     quantity = models.IntegerField(default=1)
     price = models.IntegerField()
     date = models.DateField(auto_now_add=True)
+    status = models.IntegerField(default=1)
 
     class Meta:
         verbose_name_plural = 'orders'
 
     def __str__(self):
         return f'{self.customer.first_name} - {self.product.name}'
+
+    @staticmethod
+    def fetch_order_history(user_id):
+        return Order.objects.filter(customer=user_id).order_by('-date')

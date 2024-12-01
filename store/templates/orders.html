@@ -1,0 +1,56 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+{% load order %}
+<div class="container">
+    {% if orders %}
+    <div class="border rounded p-4 m-4">
+        <h1>Your Orders</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+            <tr>
+                <td scope="row">{{ forloop.counter }}</td>
+                <td scope="row"><img class="card-img-top" src="{{order.product.image.url}}" alt="Card image"
+                                     style="height:60px"></td>
+                <td scope="row">{{ order.product.name }}</td>
+                <td scope="row">{{ order.date }}</td>
+                <td scope="row">{{ order.price }}</td>
+                <td scope="row">{{ order.quantity }}</td>
+                <td scope="row">{{ order.price|total_price_for_product:order.quantity}}</td>
+                {% with status=order.status|get_status_by_status_id %}
+                    {% if status == 'Pending' or status == 'Shipped' %}
+                        <td scope="row"><small class="badge badge-warning">{{ status }}</small></td>
+                    {% elif status == 'Out for Delivery' %}
+                        <td scope="row"><small class="badge badge-info">{{ status }}</small></td>
+                    {% elif status == 'Delivered' or status == 'Completed' or status == 'Returned - Refunded' %}
+                        <td scope="row"><small class="badge badge-success">{{ status }}</small></td>
+                    {% elif status == 'Cancelled' or status == 'Returned' or status == 'Unknown' %}
+                        <td scope="row"><small class="badge badge-danger">{{ status }}</small></td>
+                    {% endif %}
+                {% endwith%}
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="col-lg-6 mx-auto mt-4">
+        <h1 class="text-danger">No orders yet.</h1>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

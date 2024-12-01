@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from ..models.product import Product
 from ..models.order import Order
 from ..models.user import User
+from store.middleware.auth import auth_middleware
 
 def logout(request):
     user_email = request.session.get('user')
@@ -27,6 +28,7 @@ def show_cart(request):
     return render(request, 'cart.html', data)
 
 # method to proceed with the checkout
+@auth_middleware
 def check_out(request):
     print(request.POST)
     customer = User.get_user_by_id(request.session.get('userId'))
@@ -42,3 +44,11 @@ def check_out(request):
         order.save()
     request.session['cart'] = []
     return redirect('homepage')
+
+
+# method to show order history
+@auth_middleware
+def order(request):
+    userId = request.session.get('userId')
+    orders = Order.fetch_order_history(userId)
+    return render(request, 'orders.html', {'orders': orders})

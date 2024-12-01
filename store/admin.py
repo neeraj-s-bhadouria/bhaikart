@@ -14,7 +14,7 @@ class AdminUser(admin.ModelAdmin):
 
 
 class AdminOrder(admin.ModelAdmin):
-    list_display = ('customer', 'product', 'price', 'quantity', 'date')
+    list_display = ('customer', 'product', 'price', 'quantity', 'date', 'status')
 
 
 admin.site.register(Product, AdminProduct)
